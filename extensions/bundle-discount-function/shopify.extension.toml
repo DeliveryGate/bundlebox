@@ -2,6 +2,7 @@ api_version = "2026-01"
 type = "function"
 name = "Bundle Discount"
 handle = "bundle-discount-function"
+uid = "b476b856-705c-eaa2-17d5-8a972268feb0e7bf1010"
 
 [[targeting]]
 target = "purchase.product-discount.run"
