@@ -1,0 +1,9 @@
+api_version = "2026-01"
+type = "function"
+name = "Bundle Discount"
+handle = "bundle-discount-function"
+
+[[targeting]]
+target = "purchase.product-discount.run"
+input_query = "src/run.graphql"
+export = "run"

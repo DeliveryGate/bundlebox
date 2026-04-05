@@ -1,0 +1,14 @@
+{
+  "name": "bundlebox",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "cd web && node index.js",
+    "dev": "shopify app dev",
+    "deploy": "shopify app deploy",
+    "setup-metaobjects": "node scripts/setup-metaobjects.js"
+  },
+  "dependencies": { "dotenv": "^16.4.5" },
+  "engines": { "node": ">=18.0.0" }
+}

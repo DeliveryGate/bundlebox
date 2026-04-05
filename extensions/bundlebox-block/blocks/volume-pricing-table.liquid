@@ -1,0 +1,63 @@
+{% comment %}
+  BundleBox — Volume Pricing Table (Product Pages)
+  Shows tiered pricing: buy more, save more
+{% endcomment %}
+
+{% assign volume_tiers = product.metafields.bundlebox.volume_tiers.value %}
+
+{% if volume_tiers %}
+<div class="bundlebox-volume" data-product-id="{{ product.id }}">
+  <h3 class="bundlebox-volume__title">{{ block.settings.title | default: "Buy More, Save More" }}</h3>
+
+  <table class="bundlebox-volume__table">
+    <thead>
+      <tr>
+        <th>Quantity</th>
+        <th>Price Each</th>
+        <th>You Save</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% assign base_price = product.price %}
+      {% for tier in volume_tiers %}
+        {% assign discount_pct = tier.discount_percentage | times: 1.0 | divided_by: 100 %}
+        {% assign discounted_price = base_price | times: discount_pct %}
+        {% assign tier_price = base_price | minus: discounted_price %}
+        {% assign saving_per = base_price | minus: tier_price %}
+        <tr class="bundlebox-volume__row" data-tier-qty="{{ tier.quantity }}">
+          <td>
+            <span class="bundlebox-volume__qty">{{ tier.quantity }}+</span>
+          </td>
+          <td>
+            <span class="bundlebox-volume__price">{{ tier_price | money }}</span>
+          </td>
+          <td>
+            <span class="bundlebox-badge bundlebox-badge--savings">{{ tier.discount_percentage }}% off</span>
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endif %}
+
+{% schema %}
+{
+  "name": "Volume Pricing Table",
+  "target": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Table title",
+      "default": "Buy More, Save More"
+    },
+    {
+      "type": "color",
+      "id": "highlight_colour",
+      "label": "Active tier highlight",
+      "default": "#F59E0B"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,69 @@
+{% comment %}
+  BundleBox — Mix & Match Selector (Collection Pages)
+  Lets customers pick N items from a collection at a discount
+{% endcomment %}
+
+<div class="bundlebox-mixmatch" data-min-items="{{ block.settings.min_items }}" data-discount="{{ block.settings.discount_percent }}">
+  <div class="bundlebox-mixmatch__header">
+    <h2 class="bundlebox-mixmatch__title">
+      Pick any {{ block.settings.min_items }} for {{ block.settings.discount_percent }}% off
+    </h2>
+    <div class="bundlebox-mixmatch__counter">
+      <span class="bundlebox-mixmatch__count">0</span> of {{ block.settings.min_items }} selected
+    </div>
+  </div>
+
+  <div class="bundlebox-mixmatch__savings" style="display:none;">
+    You save: <span class="bundlebox-mixmatch__savings-amount">£0.00</span>
+  </div>
+
+  <div class="bundlebox-mixmatch__grid">
+    {% for product in collection.products %}
+      <div class="bundlebox-mixmatch__item" data-product-id="{{ product.id }}" data-variant-id="{{ product.selected_or_first_available_variant.id }}" data-price="{{ product.price }}">
+        <div class="bundlebox-mixmatch__checkbox">
+          <input type="checkbox" id="mix-{{ product.id }}" class="bundlebox-mixmatch__check" aria-label="Select {{ product.title }}">
+          <label for="mix-{{ product.id }}">
+            {% if product.featured_image %}
+              <img src="{{ product.featured_image | image_url: width: 200 }}" alt="{{ product.title }}" width="200" height="200" loading="lazy">
+            {% endif %}
+            <span class="bundlebox-mixmatch__item-title">{{ product.title }}</span>
+            <span class="bundlebox-mixmatch__item-price">{{ product.price | money }}</span>
+          </label>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+
+  <div class="bundlebox-mixmatch__actions">
+    <button class="bundlebox-btn bundlebox-btn--primary bundlebox-mixmatch__submit" disabled>
+      Add Selected to Cart
+    </button>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Mix & Match Selector",
+  "target": "section",
+  "settings": [
+    {
+      "type": "number",
+      "id": "min_items",
+      "label": "Minimum items to select",
+      "default": 3
+    },
+    {
+      "type": "number",
+      "id": "discount_percent",
+      "label": "Discount percentage",
+      "default": 20
+    },
+    {
+      "type": "color",
+      "id": "accent_colour",
+      "label": "Accent colour",
+      "default": "#F59E0B"
+    }
+  ]
+}
+{% endschema %}

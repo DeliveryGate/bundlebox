@@ -1,0 +1,80 @@
+{% comment %}
+  BundleBox — Bundle Display Block (Product Pages)
+  Shows bundle membership and "Add Bundle to Cart" button
+{% endcomment %}
+
+{% assign bundles_raw = shop.metaobjects.bundlebox_bundle.values %}
+{% assign product_id_str = product.id | append: '' %}
+
+<div class="bundlebox-display" data-product-id="{{ product.id }}">
+  {% for bundle in shop.metaobjects.bundlebox_bundle.values %}
+    {% if bundle.status.value == 'active' and bundle.type.value == 'fixed' %}
+      {% assign product_ids = bundle.product_ids.value %}
+      {% if product_ids contains product_id_str %}
+        <div class="bundlebox-card">
+          <div class="bundlebox-card__header">
+            <span class="bundlebox-badge bundlebox-badge--bundle">Bundle Deal</span>
+            <h3 class="bundlebox-card__title">{{ bundle.name.value }}</h3>
+          </div>
+
+          {% if bundle.original_price.value and bundle.bundle_price.value %}
+            {% assign savings = bundle.original_price.value | minus: bundle.bundle_price.value %}
+            <div class="bundlebox-card__pricing">
+              <span class="bundlebox-price bundlebox-price--original">{{ bundle.original_price.value | money }}</span>
+              <span class="bundlebox-price bundlebox-price--bundle">{{ bundle.bundle_price.value | money }}</span>
+              <span class="bundlebox-savings">Save {{ savings | money }}</span>
+            </div>
+          {% endif %}
+
+          <div class="bundlebox-card__products">
+            <p class="bundlebox-card__label">Included in this bundle:</p>
+            <div class="bundlebox-product-grid">
+              {% assign ids = bundle.product_ids.value | split: ',' %}
+              {% for pid in ids %}
+                {% assign pid_clean = pid | strip %}
+                {% for p in collections.all.products %}
+                  {% assign p_id_str = p.id | append: '' %}
+                  {% if p_id_str == pid_clean %}
+                    <div class="bundlebox-product-thumb">
+                      {% if p.featured_image %}
+                        <img src="{{ p.featured_image | image_url: width: 80 }}" alt="{{ p.title }}" width="80" height="80" loading="lazy">
+                      {% endif %}
+                      <span class="bundlebox-product-thumb__title">{{ p.title | truncate: 30 }}</span>
+                    </div>
+                  {% endif %}
+                {% endfor %}
+              {% endfor %}
+            </div>
+          </div>
+
+          <button class="bundlebox-btn bundlebox-btn--primary bundlebox-add-bundle"
+            data-bundle-products="{{ bundle.product_ids.value }}"
+            data-bundle-name="{{ bundle.name.value }}">
+            Add Bundle to Cart
+          </button>
+        </div>
+      {% endif %}
+    {% endif %}
+  {% endfor %}
+</div>
+
+{% schema %}
+{
+  "name": "Bundle Display",
+  "target": "section",
+  "settings": [
+    {
+      "type": "color",
+      "id": "accent_colour",
+      "label": "Accent colour",
+      "default": "#F59E0B"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_savings",
+      "label": "Show savings amount",
+      "default": true
+    }
+  ]
+}
+{% endschema %}
