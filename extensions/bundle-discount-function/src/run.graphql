@@ -13,9 +13,6 @@ query RunInput {
           id
           product {
             id
-            inAnyCollection {
-              value
-            }
             hasAnyTag(tags: ["bundlebox-fixed", "bundlebox-mix", "bundlebox-volume"]) {
               value
             }
