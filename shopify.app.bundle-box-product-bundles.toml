@@ -2,7 +2,7 @@
 
 client_id = "72b95bc037ba6b1a3a8cf947ace69328"
 name = "Bundle Box - Product Bundles"
-application_url = "https://shopify.dev/apps/default-app-home"
+application_url = "https://bundlebox-production.up.railway.app"
 embedded = true
 
 [build]
@@ -21,4 +21,4 @@ api_version = "2026-07"
 scopes = "read_discounts,read_metaobjects,read_products,write_discounts,write_metaobjects,write_products"
 
 [auth]
-redirect_urls = [ "https://shopify.dev/apps/default-app-home/api/auth" ]
+redirect_urls = [ "https://bundlebox-production.up.railway.app/api/auth" ]

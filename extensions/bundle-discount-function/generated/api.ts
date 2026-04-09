@@ -31,11 +31,6 @@ export type CartLineCost = {
   amountPerQuantity: MoneyV2;
 };
 
-export type CollectionMembershipResult = {
-  __typename?: 'CollectionMembershipResult';
-  value: Scalars['Boolean']['output'];
-};
-
 export type DiscountNode = {
   __typename?: 'DiscountNode';
   metafield?: Maybe<Metafield>;
@@ -67,19 +62,13 @@ export type OtherMerchandise = {
 
 export type Product = {
   __typename?: 'Product';
-  hasAnyTag: TagResult;
+  hasAnyTag: Scalars['Boolean']['output'];
   id: Scalars['ID']['output'];
-  inAnyCollection: CollectionMembershipResult;
 };
 
 
 export type ProductHasAnyTagArgs = {
   tags: Array<Scalars['String']['input']>;
-};
-
-
-export type ProductInAnyCollectionArgs = {
-  ids: Array<Scalars['ID']['input']>;
 };
 
 export type ProductVariant = {
@@ -94,12 +83,7 @@ export type Query = {
   discountNode: DiscountNode;
 };
 
-export type TagResult = {
-  __typename?: 'TagResult';
-  value: Scalars['Boolean']['output'];
-};
-
 export type RunInputQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type RunInputQuery = { __typename?: 'Query', cart: { __typename?: 'Cart', lines: Array<{ __typename?: 'CartLine', quantity: number, cost: { __typename?: 'CartLineCost', amountPerQuantity: { __typename?: 'MoneyV2', amount: string, currencyCode: string } }, merchandise: { __typename?: 'OtherMerchandise' } | { __typename?: 'ProductVariant', id: string, product: { __typename?: 'Product', id: string, hasAnyTag: { __typename?: 'TagResult', value: boolean } } } }> }, discountNode: { __typename?: 'DiscountNode', metafield?: { __typename?: 'Metafield', value: string } | null } };
+export type RunInputQuery = { __typename?: 'Query', cart: { __typename?: 'Cart', lines: Array<{ __typename?: 'CartLine', quantity: number, cost: { __typename?: 'CartLineCost', amountPerQuantity: { __typename?: 'MoneyV2', amount: string, currencyCode: string } }, merchandise: { __typename?: 'OtherMerchandise' } | { __typename?: 'ProductVariant', id: string, product: { __typename?: 'Product', id: string, hasAnyTag: boolean } } }> }, discountNode: { __typename?: 'DiscountNode', metafield?: { __typename?: 'Metafield', value: string } | null } };
