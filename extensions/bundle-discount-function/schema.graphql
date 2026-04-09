@@ -35,16 +35,7 @@ type OtherMerchandise {
 
 type Product {
   id: ID!
-  inAnyCollection(ids: [ID!]!): CollectionMembershipResult!
-  hasAnyTag(tags: [String!]!): TagResult!
-}
-
-type CollectionMembershipResult {
-  value: Boolean!
-}
-
-type TagResult {
-  value: Boolean!
+  hasAnyTag(tags: [String!]!): Boolean!
 }
 
 type DiscountNode {

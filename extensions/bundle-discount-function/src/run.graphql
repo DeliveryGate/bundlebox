@@ -13,9 +13,7 @@ query RunInput {
           id
           product {
             id
-            hasAnyTag(tags: ["bundlebox-fixed", "bundlebox-mix", "bundlebox-volume"]) {
-              value
-            }
+            hasAnyTag(tags: ["bundlebox-fixed", "bundlebox-mix", "bundlebox-volume"])
           }
         }
       }

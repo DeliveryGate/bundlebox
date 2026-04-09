@@ -70,7 +70,7 @@ function applyMixMatchBundle(bundle: Bundle, lines: CartLine[]) {
 
   for (const line of lines) {
     if (line.merchandise.__typename !== "ProductVariant") continue;
-    if (line.merchandise.product.hasAnyTag.value) {
+    if (line.merchandise.product.hasAnyTag) {
       qualifyingQty += line.quantity;
       targets.push({ productVariant: { id: line.merchandise.id } });
     }
