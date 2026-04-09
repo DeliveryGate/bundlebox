@@ -1,0 +1,56 @@
+type Query {
+  cart: Cart!
+  discountNode: DiscountNode!
+}
+
+type Cart {
+  lines: [CartLine!]!
+}
+
+type CartLine {
+  quantity: Int!
+  cost: CartLineCost!
+  merchandise: Merchandise!
+}
+
+type CartLineCost {
+  amountPerQuantity: MoneyV2!
+}
+
+type MoneyV2 {
+  amount: String!
+  currencyCode: String!
+}
+
+union Merchandise = ProductVariant | OtherMerchandise
+
+type ProductVariant {
+  id: ID!
+  product: Product!
+}
+
+type OtherMerchandise {
+  id: ID
+}
+
+type Product {
+  id: ID!
+  inAnyCollection(ids: [ID!]!): CollectionMembershipResult!
+  hasAnyTag(tags: [String!]!): TagResult!
+}
+
+type CollectionMembershipResult {
+  value: Boolean!
+}
+
+type TagResult {
+  value: Boolean!
+}
+
+type DiscountNode {
+  metafield(namespace: String!, key: String!): Metafield
+}
+
+type Metafield {
+  value: String!
+}

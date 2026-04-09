@@ -1,0 +1,26 @@
+{
+  "name": "bundle-discount-function",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "build": "javy build -d -o dist/index.wasm dist/function.js",
+    "shopify-build": "shopify app function build"
+  },
+  "dependencies": {
+    "@shopify/shopify_function": "~2.0.0"
+  },
+  "codegen": {
+    "overwrite": true,
+    "generates": {
+      "generated/api.ts": {
+        "schema": "./schema.graphql",
+        "documents": ["src/**/*.graphql"],
+        "plugins": ["typescript", "typescript-operations"],
+        "config": {
+          "flattenGeneratedTypes": true,
+          "flattenGeneratedTypesIncludeFragments": true
+        }
+      }
+    }
+  }
+}
